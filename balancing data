@@ -1,0 +1,50 @@
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from imblearn.over_sampling import SMOTE
+
+
+# Separate Features and Target Variable
+
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+
+
+# Check Original Class Distribution
+
+print("Original Class Distribution:")
+print(y.value_counts())
+
+
+# Visualize Original Data Distribution
+
+sns.countplot(x=y, palette="Set2")
+plt.title("Before SMOTE - Class Distribution")
+plt.xlabel("Loan Status")
+plt.ylabel("Count")
+plt.show()
+
+
+# Apply SMOTE
+
+smote = SMOTE(random_state=42)
+
+X_balanced, y_balanced = smote.fit_resample(X, y)
+
+
+# Check Balanced Class Distribution
+
+print("Balanced Class Distribution:")
+print(y_balanced.value_counts())
+
+
+# Visualize Balanced Data Distribution
+
+sns.countplot(x=y_balanced, palette="Set1")
+plt.title("After SMOTE - Class Distribution")
+plt.xlabel("Loan Status")
+plt.ylabel("Count")
+plt.show()
