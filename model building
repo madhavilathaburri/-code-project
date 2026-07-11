@@ -1,0 +1,249 @@
+# Import Required Libraries
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# Decision Tree Function
+
+def decisionTree(X_train, X_test, y_train, y_test):
+
+    # Initialize Decision Tree Classifier
+
+    model = DecisionTreeClassifier(
+        random_state=42
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("Decision Tree Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate Decision Tree Model
+
+dt_model = decisionTree(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+
+
+# Import Required Libraries
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# Random Forest Function
+
+def randomForest(X_train, X_test, y_train, y_test):
+
+    # Initialize Random Forest Classifier
+
+    model = RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("Random Forest Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate Random Forest Model
+
+rf_model = randomForest(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+
+# Import Required Libraries
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# KNN Function
+
+def KNN(X_train, X_test, y_train, y_test):
+
+    # Initialize KNN Classifier
+
+    model = KNeighborsClassifier(
+        n_neighbors=5
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("KNN Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate KNN Model
+
+knn_model = KNN(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+# Import Required Libraries
+
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# XGBoost Function
+
+def xgboost(X_train, X_test, y_train, y_test):
+
+    # Initialize Gradient Boosting Classifier
+
+    model = GradientBoostingClassifier(
+        random_state=42
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("XGBoost Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate XGBoost Model
+
+xgb_model = xgboost(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+# Import Required Libraries
+
+from sklearn.model_selection import cross_val_score
+import pickle
+
+
+# Apply 5-Fold Cross Validation
+
+cv_scores = cross_val_score(
+    xgb_model,
+    X_train,
+    y_train,
+    cv=5,
+    scoring='accuracy'
+)
+
+
+# Display Cross Validation Scores
+
+print("Cross Validation Scores:")
+print(cv_scores)
+
+print("\nAverage Cross Validation Accuracy:")
+print(cv_scores.mean())
+
+
+# Save Best Performing Model
+
+with open("loan_prediction_model.pkl", "wb") as file:
+    pickle.dump(xgb_model, file)
+
+
+print("Model saved successfully!")
