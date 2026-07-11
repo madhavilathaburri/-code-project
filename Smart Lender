@@ -1,0 +1,737 @@
+```mermaid
+erDiagram
+
+    USER {
+        int user_id PK
+        string name
+        string email
+        string password
+        string role
+    }
+
+    APPLICANT_PROFILE {
+        int profile_id PK
+        int user_id FK
+        int age
+        string gender
+        float annual_income
+        string education
+    }
+
+    CREDIT_HISTORY {
+        int credit_history_id PK
+        int profile_id FK
+        int credit_score
+        string repayment_status
+        float outstanding_debt
+    }
+
+    LOAN_APPLICATION {
+        int application_id PK
+        int user_id FK
+        int profile_id FK
+        float loan_amount
+        int loan_term
+        string loan_purpose
+        string application_status
+    }
+
+    MODEL {
+        int model_id PK
+        string model_name
+        string algorithm
+        string version
+        float accuracy
+    }
+
+    PREDICTION_RESULT {
+        int prediction_id PK
+        int application_id FK
+        int model_id FK
+        string prediction
+        float probability_score
+    }
+```mermaid
+erDiagram
+
+    USER {
+        int user_id PK
+        string name
+        string email
+        string password
+        string role
+    }
+
+    APPLICANT_PROFILE {
+        int profile_id PK
+        int user_id FK
+        int age
+        string gender
+        string education
+        string employment_type
+        float annual_income
+    }
+
+    CREDIT_HISTORY {
+        int credit_history_id PK
+        int profile_id FK
+        int credit_score
+        int previous_loans
+        string repayment_status
+        float outstanding_debt
+    }
+
+    LOAN_APPLICATION {
+        int application_id PK
+        int user_id FK
+        int profile_id FK
+        float loan_amount
+        int loan_term
+        string loan_purpose
+        string application_status
+        date application_date
+    }
+
+    MODEL {
+        int model_id PK
+        string model_name
+        string algorithm
+        string version
+        float accuracy
+        date trained_date
+    }
+
+    PREDICTION_RESULT {
+        int prediction_id PK
+        int application_id FK
+        int model_id FK
+        string prediction_status
+        float probability_score
+        date prediction_date
+    }
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.style.use('fivethirtyeight')
+data = pd.read_csv("loan_prediction.csv")
+data.head()
+
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.style.use('fivethirtyeight')
+
+df = pd.read_csv("loan_prediction.csv")
+
+df.head()
+
+plt.figure(figsize=(8,5))
+
+sns.distplot(df['ApplicantIncome'], color='blue')
+
+plt.title("Distribution of Applicant Income")
+plt.xlabel("Applicant Income")
+plt.ylabel("Density")
+plt.show()
+
+# Distribution plot for Applicant Income
+plt.figure(figsize=(8,5))
+sns.distplot(df['ApplicantIncome'], color='blue')
+plt.title("Distribution of Applicant Income")
+plt.xlabel("Applicant Income")
+plt.ylabel("Density")
+plt.show()
+
+# Count plot for Credit History
+
+plt.figure(figsize=(6,4))
+sns.countplot(x='Credit_History', data=df, palette='Set2')
+plt.title("Credit History Distribution")
+plt.xlabel("Credit History")
+plt.ylabel("Count")
+plt.show()
+
+
+categorical_features = ['Gender', 'Education']
+fig, axes = plt.subplots(1, 2, figsize=(12,5))
+for i, feature in enumerate(categorical_features):
+    sns.countplot(
+        x=feature,
+        data=df,
+        ax=axes[i],
+        palette='Set2'
+    )
+    
+    axes[i].set_title(f"{feature} Distribution")
+    axes[i].set_xlabel(feature)
+    axes[i].set_ylabel("Count")
+plt.tight_layout()
+plt.show()
+
+# List of numerical features
+
+numerical_features = ['ApplicantIncome', 'LoanAmount']
+fig, axes = plt.subplots(1, 2, figsize=(12,5))
+
+for i, feature in enumerate(numerical_features):
+    sns.histplot(
+        df[feature],
+        kde=True,
+        ax=axes[i],
+        color='skyblue'
+    )
+    
+    axes[i].set_title(f"Distribution of {feature}")
+
+plt.tight_layout()
+plt.show()
+
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = pd.read_csv("loan_prediction.csv")
+plt.style.use('fivethirtyeight')
+numerical_features = ['ApplicantIncome', 'LoanAmount']
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+for i, feature in enumerate(numerical_features):
+    sns.histplot(
+        data=df,
+        x=feature,
+        kde=True,
+        ax=axes[i],
+        color='skyblue'
+    )
+
+    axes[i].set_title(f"Distribution of {feature}")
+    axes[i].set_xlabel(feature)
+    axes[i].set_ylabel("Frequency")
+
+plt.tight_layout()
+plt.show()
+
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("loan_prediction.csv")
+plt.style.use('fivethirtyeight')
+plt.figure(figsize=(10, 6))
+sns.swarmplot(
+    x="Education",
+    y="ApplicantIncome",
+    hue="Loan_Status",
+    data=df,
+    palette="Set2"
+)
+plt.title("Applicant Income Distribution Based on Education and Loan Status")
+plt.xlabel("Education")
+plt.ylabel("Applicant Income")
+
+plt.show()
+
+
+# Create subplots for multiple relationships
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+
+# Applicant Income vs Education
+
+sns.swarmplot(
+    x="Education",
+    y="ApplicantIncome",
+    hue="Loan_Status",
+    data=df,
+    ax=axes[0],
+    palette="Set1"
+)
+
+axes[0].set_title("Income vs Education")
+sns.swarmplot(
+    x="Credit_History",
+    y="LoanAmount",
+    hue="Loan_Status",
+    data=df,
+    ax=axes[1],
+    palette="Set2"
+)
+
+axes[1].set_title("Loan Amount vs Credit History")
+
+plt.tight_layout()
+plt.show()
+
+# Import Required Libraries
+
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+
+# Load Dataset
+
+df = pd.read_csv("loan_prediction.csv")
+
+
+# Display Dataset Information
+
+print("Dataset Shape:")
+print(df.shape)
+
+print("\nDataset Information:")
+df.info()
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+
+# Encode Categorical Features
+
+categorical_columns = [
+    'Gender',
+    'Married',
+    'Dependents',
+    'Education',
+    'Self_Employed',
+    'Property_Area',
+    'Loan_Status'
+]
+
+
+encoder = LabelEncoder()
+
+for column in categorical_columns:
+    df[column] = encoder.fit_transform(df[column].astype(str))
+numerical_columns = df.select_dtypes(
+    include=['int64', 'float64']
+).columns
+
+for column in numerical_columns:
+    df[column].fillna(
+        df[column].mean(),
+        inplace=True
+    )
+# Categorical columns - replace with mode
+
+categorical_columns = df.select_dtypes(
+    include=['object']
+).columns
+
+for column in categorical_columns:
+    df[column].fillna(
+        df[column].mode()[0],
+        inplace=True
+    )
+print("\nMissing Values After Preprocessing:")
+print(df.isnull().sum())
+df.head()
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+df = pd.read_csv("loan_prediction.csv")
+
+print("Dataset Shape:")
+print(df.shape)
+
+print("\nDataset Information:")
+df.info()
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+categorical_columns = [
+    'Gender',
+    'Married',
+    'Dependents',
+    'Education',
+    'Self_Employed',
+    'Property_Area',
+    'Loan_Status'
+]
+
+
+encoder = LabelEncoder()
+
+for column in categorical_columns:
+    df[column] = encoder.fit_transform(df[column].astype(str))
+numerical_columns = df.select_dtypes(
+    include=['int64', 'float64']
+).columns
+
+for column in numerical_columns:
+    df[column].fillna(
+        df[column].mean(),
+        inplace=True
+    )
+categorical_columns = df.select_dtypes(
+    include=['object']
+).columns
+
+for column in categorical_columns:
+    df[column].fillna(
+        df[column].mode()[0],
+        inplace=True
+    )
+print("\nMissing Values After Preprocessing:")
+print(df.isnull().sum())
+
+df.head()
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from imblearn.over_sampling import SMOTE
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+print("Original Class Distribution:")
+print(y.value_counts())
+sns.countplot(x=y, palette="Set2")
+plt.title("Before SMOTE - Class Distribution")
+plt.xlabel("Loan Status")
+plt.ylabel("Count")
+plt.show()
+
+smote = SMOTE(random_state=42)
+X_balanced, y_balanced = smote.fit_resample(X, y)
+print("Balanced Class Distribution:")
+print(y_balanced.value_counts())
+
+sns.countplot(x=y_balanced, palette="Set1")
+plt.title("After SMOTE - Class Distribution")
+plt.xlabel("Loan Status")
+plt.ylabel("Count")
+plt.show()
+
+
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+X_scaled = pd.DataFrame(
+    X_scaled,
+    columns=X.columns
+)
+X_scaled.head()
+from sklearn.model_selection import train_test_split
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+# Display Dataset Sizes
+
+print("Training Features:", X_train.shape)
+print("Testing Features:", X_test.shape)
+
+print("Training Target:", y_train.shape)
+print("Testing Target:", y_test.shape)
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+# Decision Tree Function
+def decisionTree(X_train, X_test, y_train, y_test):
+    model = DecisionTreeClassifier(
+        random_state=42
+    )
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    # Evaluate Model Performance
+
+    print("Decision Tree Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate Decision Tree Model
+
+dt_model = decisionTree(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+
+# Import Required Libraries
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# Random Forest Function
+
+def randomForest(X_train, X_test, y_train, y_test):
+
+    # Initialize Random Forest Classifier
+
+    model = RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("Random Forest Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate Random Forest Model
+
+rf_model = randomForest(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+# Import Required Libraries
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+# KNN Function
+
+def KNN(X_train, X_test, y_train, y_test):
+
+    # Initialize KNN Classifier
+
+    model = KNeighborsClassifier(
+        n_neighbors=5
+    )
+
+
+    # Train the Model
+
+    model.fit(X_train, y_train)
+
+
+    # Make Predictions
+
+    y_pred = model.predict(X_test)
+
+
+    # Evaluate Model Performance
+
+    print("KNN Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+
+# Train and Evaluate KNN Model
+
+knn_model = KNN(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+
+def xgboost(X_train, X_test, y_train, y_test):
+
+    model = GradientBoostingClassifier(
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    print("XGBoost Accuracy:")
+    print(accuracy_score(y_test, y_pred))
+
+
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+
+    return model
+
+xgb_model = xgboost(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+)
+
+
+from sklearn.model_selection import cross_val_score
+import pickle
+
+cv_scores = cross_val_score(
+    xgb_model,
+    X_train,
+    y_train,
+    cv=5,
+    scoring='accuracy'
+)
+
+print("Cross Validation Scores:")
+print(cv_scores)
+
+print("\nAverage Cross Validation Accuracy:")
+print(cv_scores.mean())
+with open("loan_prediction_model.pkl", "wb") as file:
+    pickle.dump(xgb_model, file)
+
+
+print("Model saved successfully!")
+
+import pickle
+
+with open("loan_prediction_model.pkl", "rb") as file:
+    loaded_model = pickle.load(file)
+
+prediction = loaded_model.predict(X_test)
+
+print(prediction)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Lender</title>
+</head>
+
+<body>
+
+<h1>Smart Lender</h1>
+
+<p>
+    Loan Approval Prediction System using Machine Learning.
+</p>
+
+<a href="/predict">
+    <button>Predict</button>
+</a>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loan Prediction</title>
+</head>
+
+<body>
+
+<h1>Enter Applicant Details</h1>
+
+<form action="/predict" method="POST">
+
+<label>Applicant Income:</label>
+<input type="number" name="income"><br><br>
+
+
+<label>Loan Amount:</label>
+<input type="number" name="loan_amount"><br><br>
+
+
+<label>Credit History:</label>
+<input type="number" name="credit_history"><br><br>
+
+
+<label>Education:</label>
+<select name="education">
+    <option value="0">Graduate</option>
+    <option value="1">Not Graduate</option>
+</select>
+<br><br>
+
+
+<button type="submit">
+    Submit
+</button>
+
+</form>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prediction Result</title>
+</head>
+
+<body>
+
+<h1>Loan Prediction Result</h1>
+
+<h2>
+    {{ prediction }}
+</h2>
+
+<a href="/predict">
+    Try Again
+</a>
+
+</body>
+</html>
