@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loan Prediction</title>
+</head>
+
+<body>
+
+<h1>Enter Applicant Details</h1>
+
+<form action="/predict" method="POST">
+
+<label>Applicant Income:</label>
+<input type="number" name="income"><br><br>
+
+
+<label>Loan Amount:</label>
+<input type="number" name="loan_amount"><br><br>
+
+
+<label>Credit History:</label>
+<input type="number" name="credit_history"><br><br>
+
+
+<label>Education:</label>
+<select name="education">
+    <option value="0">Graduate</option>
+    <option value="1">Not Graduate</option>
+</select>
+<br><br>
+
+
+<button type="submit">
+    Submit
+</button>
+
+</form>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prediction Result</title>
+</head>
+
+<body>
+
+<h1>Loan Prediction Result</h1>
+
+<h2>
+    {{ prediction }}
+</h2>
+
+<a href="/predict">
+    Try Again
+</a>
+
+</body>
+</html>
+
+# Import Required Libraries
+
+from flask import Flask, render_template, request
+import pickle
+import numpy as np
+
+
+# Load Saved Machine Learning Model
+
+model = pickle.load(
+    open("rdf.pkl", "rb")
+)
+
+
+# Create Flask Application
+
+app = Flask(__name__)
+
+
+# Home Page Route
+
+@app.route('/')
+def home():
+
+    return render_template("home.html")
+
+
+# Prediction Page Route
+
+@app.route('/predict')
+def predict():
+
+    return render_template("predict.html")
+
+
+# Run Flask Application
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+# Import Required Libraries
+
+from flask import Flask, render_template, request
+import pickle
+import numpy as np
+
+
+# Load Trained Model
+
+model = pickle.load(
+    open("rdf.pkl", "rb")
+)
+
+
+# Create Flask Application
+
+app = Flask(__name__)
+
+
+# Home Page
+
+@app.route('/')
+def home():
+    return render_template("home.html")
+
+
+# Prediction Page
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+
+    if request.method == 'POST':
+
+        # Get User Input Values
+
+        applicant_income = float(request.form['income'])
+        loan_amount = float(request.form['loan_amount'])
+        credit_history = int(request.form['credit_history'])
+        education = int(request.form['education'])
+
+
+        # Create Input Array
+
+        input_data = np.array([
+            [
+                applicant_income,
+                loan_amount,
+                credit_history,
+                education
+            ]
+        ])
+
+
+        # Generate Prediction
+
+        prediction = model.predict(input_data)
+
+
+        # Display Result
+
+        if prediction[0] == 1:
+            result = "Loan Approved"
+        else:
+            result = "Loan Rejected"
+
+
+        return render_template(
+            "result.html",
+            prediction=result
+        )
+
+
+    return render_template("predict.html")
+
+
+# Run Application
+
+if __name__ == "__main__":
+    app.run(
+        debug=True
+    )
