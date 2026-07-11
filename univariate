@@ -1,0 +1,111 @@
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set Visualization Style
+
+plt.style.use('fivethirtyeight')
+
+# Load Dataset
+
+df = pd.read_csv("loan_prediction.csv")
+
+# Display Dataset Information
+
+df.head()
+
+
+
+# Distribution plot for Applicant Income
+
+plt.figure(figsize=(8,5))
+
+sns.distplot(df['ApplicantIncome'], color='blue')
+
+plt.title("Distribution of Applicant Income")
+plt.xlabel("Applicant Income")
+plt.ylabel("Density")
+
+plt.show()
+
+# Distribution plot for Applicant Income
+
+plt.figure(figsize=(8,5))
+
+sns.distplot(df['ApplicantIncome'], color='blue')
+
+plt.title("Distribution of Applicant Income")
+plt.xlabel("Applicant Income")
+plt.ylabel("Density")
+
+plt.show()
+
+# Distribution plot for Applicant Income
+
+plt.figure(figsize=(8,5))
+
+sns.distplot(df['ApplicantIncome'], color='blue')
+
+plt.title("Distribution of Applicant Income")
+plt.xlabel("Applicant Income")
+plt.ylabel("Density")
+
+plt.show()# Count plot for Credit History
+
+plt.figure(figsize=(6,4))
+
+sns.countplot(x='Credit_History', data=df, palette='Set2')
+
+plt.title("Credit History Distribution")
+plt.xlabel("Credit History")
+plt.ylabel("Count")
+
+plt.show()
+
+# Select categorical features
+
+categorical_features = ['Gender', 'Education']
+
+# Create subplot
+
+fig, axes = plt.subplots(1, 2, figsize=(12,5))
+
+# Plot count plots using for loop
+
+for i, feature in enumerate(categorical_features):
+    sns.countplot(
+        x=feature,
+        data=df,
+        ax=axes[i],
+        palette='Set2'
+    )
+    
+    axes[i].set_title(f"{feature} Distribution")
+    axes[i].set_xlabel(feature)
+    axes[i].set_ylabel("Count")
+
+plt.tight_layout()
+plt.show()
+
+# List of numerical features
+
+numerical_features = ['ApplicantIncome', 'LoanAmount']
+
+# Create subplots
+
+fig, axes = plt.subplots(1, 2, figsize=(12,5))
+
+for i, feature in enumerate(numerical_features):
+    sns.histplot(
+        df[feature],
+        kde=True,
+        ax=axes[i],
+        color='skyblue'
+    )
+    
+    axes[i].set_title(f"Distribution of {feature}")
+
+plt.tight_layout()
+plt.show()
