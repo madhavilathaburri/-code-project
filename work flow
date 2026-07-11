@@ -1,0 +1,33 @@
+```mermaid
+flowchart TD
+
+A[Project Workflow]
+
+A --> B[Epic 1: Data Collection & Architecture Design]
+B --> B1[Story 1: Download Dataset]
+B --> B2[Story 2: Design Application Architecture]
+
+A --> C[Epic 2: Data Visualization & Analysis]
+C --> C1[Story 1: Import Dataset using Pandas]
+C --> C2[Story 2: Univariate Analysis]
+C --> C3[Story 3: Bivariate Analysis]
+C --> C4[Story 4: Multivariate Analysis]
+
+A --> D[Epic 3: Data Preprocessing]
+D --> D1[Story 1: Handle Missing Values & Duplicates]
+D --> D2[Story 2: Balance Dataset]
+D --> D3[Story 3: Scale & Normalize Data]
+D --> D4[Story 4: Train-Test Split]
+
+A --> E[Epic 4: Model Building]
+E --> E1[Story 1: Train Decision Tree]
+E --> E2[Story 2: Train Random Forest]
+E --> E3[Story 3: Train KNN]
+E --> E4[Story 4: Train XGBoost]
+E --> E5[Story 5: Evaluate Models & Save Best Model]
+
+A --> F[Epic 5: Application Building]
+F --> F1[Story 1: Develop HTML Pages]
+F --> F2[Story 2: Build Flask Application]
+F --> F3[Story 3: Test & Deploy Application]
+```
