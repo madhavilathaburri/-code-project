@@ -1,0 +1,33 @@
+# Import Required Library
+
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
+
+# Separate Features and Target Variable
+
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+
+
+# Initialize Standard Scaler
+
+scaler = StandardScaler()
+
+
+# Apply Scaling Only on Input Features
+
+X_scaled = scaler.fit_transform(X)
+
+
+# Convert Array Back to DataFrame
+
+X_scaled = pd.DataFrame(
+    X_scaled,
+    columns=X.columns
+)
+
+
+# Display Scaled Features
+
+X_scaled.head()
