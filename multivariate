@@ -1,0 +1,41 @@
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load Dataset
+
+df = pd.read_csv("loan_prediction.csv")
+
+# Set Visualization Style
+
+plt.style.use('fivethirtyeight')
+
+
+# Create Figure
+
+plt.figure(figsize=(10, 6))
+
+
+# Swarm Plot
+
+sns.swarmplot(
+    x="Education",
+    y="ApplicantIncome",
+    hue="Loan_Status",
+    data=df,
+    palette="Set2"
+)
+
+
+# Add Title and Labels
+
+plt.title("Applicant Income Distribution Based on Education and Loan Status")
+plt.xlabel("Education")
+plt.ylabel("Applicant Income")
+
+
+# Display Plot
+
+plt.show()
