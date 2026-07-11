@@ -1,0 +1,21 @@
+```mermaid
+flowchart TD
+
+A[Open Source Dataset Repository] --> B[Kaggle / UCI Machine Learning Repository]
+
+B --> C[Loan Prediction Dataset]
+
+C --> D[Download Dataset from Google Drive]
+
+D --> E[Store Dataset in Project Directory]
+
+E --> F[Data Loading using Pandas]
+
+F --> G[Data Cleaning & Preprocessing]
+
+G --> H[Feature Selection]
+
+H --> I[Machine Learning Model Training]
+
+I --> J[Loan Approval Prediction System]
+```
