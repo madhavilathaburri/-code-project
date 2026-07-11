@@ -1,0 +1,61 @@
+```mermaid
+erDiagram
+
+    USER {
+        int user_id PK
+        string name
+        string email
+        string password
+        string role
+    }
+
+    APPLICANT_PROFILE {
+        int profile_id PK
+        int user_id FK
+        int age
+        string gender
+        float annual_income
+        string education
+    }
+
+    CREDIT_HISTORY {
+        int credit_history_id PK
+        int profile_id FK
+        int credit_score
+        string repayment_status
+        float outstanding_debt
+    }
+
+    LOAN_APPLICATION {
+        int application_id PK
+        int user_id FK
+        int profile_id FK
+        float loan_amount
+        int loan_term
+        string loan_purpose
+        string application_status
+    }
+
+    MODEL {
+        int model_id PK
+        string model_name
+        string algorithm
+        string version
+        float accuracy
+    }
+
+    PREDICTION_RESULT {
+        int prediction_id PK
+        int application_id FK
+        int model_id FK
+        string prediction
+        float probability_score
+    }
+
+    USER ||--o{ LOAN_APPLICATION : submits
+    USER ||--|| APPLICANT_PROFILE : has
+    APPLICANT_PROFILE ||--|| CREDIT_HISTORY : owns
+    APPLICANT_PROFILE ||--o{ LOAN_APPLICATION : applies_for
+    LOAN_APPLICATION ||--|| PREDICTION_RESULT : generates
+    MODEL ||--o{ PREDICTION_RESULT : produces
+```
