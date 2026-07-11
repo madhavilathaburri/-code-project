@@ -1,0 +1,17 @@
+# Import Required Libraries
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set Visualization Style
+plt.style.use('fivethirtyeight')
+
+# Read Dataset
+
+data = pd.read_csv("loan_prediction.csv")
+
+# Display First Five Records
+
+data.head()
