@@ -1,0 +1,48 @@
+# Import Required Libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load Dataset
+
+df = pd.read_csv("loan_prediction.csv")
+
+# Set Visualization Style
+
+plt.style.use('fivethirtyeight')
+
+
+# List of numerical features
+
+numerical_features = ['ApplicantIncome', 'LoanAmount']
+
+
+# Create subplots
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+
+# Plot distribution for each numerical feature
+
+for i, feature in enumerate(numerical_features):
+    sns.histplot(
+        data=df,
+        x=feature,
+        kde=True,
+        ax=axes[i],
+        color='skyblue'
+    )
+
+    axes[i].set_title(f"Distribution of {feature}")
+    axes[i].set_xlabel(feature)
+    axes[i].set_ylabel("Frequency")
+
+
+# Adjust layout
+
+plt.tight_layout()
+
+# Display plots
+
+plt.show()
